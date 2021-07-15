@@ -58,19 +58,31 @@ body {
 }
 
 .check {
-   background-color:  #404a6e;
-   width: 20px;
-   height: 20px;
-   border-radius: 50px;
-   margin-right: 15px;
-   cursor: pointer;
-   transition: backgroud-color 200ms ease;
+    position: relative;
+    background-color:  #404a6e;
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    margin-right: 15px;
+    cursor: pointer;
+    transition: backgroud-color 200ms ease;
 }
 
 .check:hover {
     background-color: #171d37;
 }
 
+.done .check:after{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    display: block;
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: greenyellow;
+}
 .remove {
     position: absolute;
     top: 20px;
@@ -79,10 +91,6 @@ body {
     cursor: pointer;
     opacity: 0;
     transition: opacity 200ms ease;
-}
-
-.remove::after {
-   
 }
 
 .todoList .footer {
