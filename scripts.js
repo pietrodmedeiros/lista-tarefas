@@ -11,8 +11,8 @@ const Main = {
 
     callevents: function() {
         const self = this
-        this.checkButtons.forEach(function(button){
-            button.onclick = self.Events.checkbutton_click
+        this.checkButtons.forEach(function(button){              
+                button.onclick = self.Events.checkbutton_click
         });
     },
 
@@ -21,7 +21,16 @@ const Main = {
     Events: {
         checkbutton_click: function(e){
             const li = e.target.parentElement
-            li.classList.add("done")
+            const isDone = li.classList.contains("done")
+            if (!isDone) {
+                li.classList.add("done")
+            }else {
+                li.classList.remove("done")
+            }
+        },
+
+        removeTask_click: function(e){
+
         }
     }
 }
