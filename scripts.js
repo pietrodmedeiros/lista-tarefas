@@ -6,7 +6,7 @@ const Main = {
 
     selectors: function() {
         this.checkButtons = document.querySelectorAll(".check")
-        this.demoveButtons = document.querySelectorAll('.remove')
+        this.removeButtons = document.querySelectorAll('.remove')
         this.inputTask = document.querySelector('#inputTask')
         this.list = document.querySelector('#list')
     },
@@ -18,6 +18,10 @@ const Main = {
         })
 
         this.inputTask.onkeypress = self.Events.inputTask_keyPress.bind(this)
+
+        this.removeButtons.forEach(function(button){
+            button.onclick = self.Events.deleteButton_click
+        })
     },
 
 
@@ -31,6 +35,14 @@ const Main = {
             }else {
                 li.classList.remove("done")
             }
+        },
+
+        deleteButton_click: function(e){
+            const li = e.target.parentElement
+            li.classList.add("hidden1")
+            setTimeout(function(){
+                li.classList.add("hidden2")
+            },300)
         },
 
         inputTask_keyPress: function(e){

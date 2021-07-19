@@ -47,6 +47,7 @@ body {
     align-items: center;
     padding: 20px;
     transition: backgroud-color 200ms ease;
+    transition: display 200ms ease;
 }
 
 .wrapper-list ul.list li:hover {
@@ -97,6 +98,15 @@ body {
     transition: opacity 200ms ease;
 }
 
+.wrapper-list ul.list li.hidden1 {
+    animation: deleteTask 2000ms ease;
+}
+
+.wrapper-list ul.list li.hidden2 {
+    display: none;
+}
+
+
 .todoList .footer {
     background-color: #171d37;
 }
@@ -108,4 +118,13 @@ body {
     padding: 20px;
     font-family: "Roboto Condensed", Arial, sans-serif;
     color: aliceblue;
+}
+
+@keyframes deleteTask {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
