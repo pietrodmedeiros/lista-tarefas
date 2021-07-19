@@ -50,6 +50,9 @@ const Main = {
         })
 
         this.list.innerHTML = html
+
+        this.selectors()
+        this.callEvents()
     },
 
 
@@ -91,9 +94,14 @@ const Main = {
                 this.selectors()
                 this.callEvents()
 
-                const obj = [{
-                    task: newTask
-                }]
+                const savedTasks = localStorage.getItem('tasks')
+                const savedTasksObj = JSON.parse(savedTasks)
+
+
+                const obj = [
+                    { task: newTask },
+                    ...savedTasksObj,
+                ]
 
                 localStorage.setItem('tasks', JSON.stringify(obj))
             }
