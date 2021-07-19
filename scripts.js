@@ -1,7 +1,12 @@
 const Main = {
+
+    tasks: [],
+
     init: function() {
         this.selectors()
-        this.callevents()
+        this.callEvents()
+        this.getLocalStorage()
+        this.showTasks()
     },
 
     selectors: function() {
@@ -11,7 +16,7 @@ const Main = {
         this.list = document.querySelector('#list')
     },
 
-    callevents: function() {
+    callEvents: function() {
         const self = this
         this.checkButtons.forEach(function(button){              
                 button.onclick = self.Events.checkButton_click
@@ -24,6 +29,28 @@ const Main = {
         })
     },
 
+    getLocalStorage: function() {
+        const tasks = localStorage.getItem('tasks')
+        this.tasks = JSON.parse(tasks)
+    },
+
+    showTasks: function(){
+        let html = ''
+        this.tasks.forEach(task =>{
+            html += 
+            `
+                <li id="done">
+                    <div class="check"></div>
+                    <label class="task">
+                        ${task.task}
+                    </label>
+                    <img class="remove" src="./img/delete.svg">
+                </li>
+            `
+        })
+
+        this.list.innerHTML = html
+    },
 
 
     Events: {
@@ -50,7 +77,8 @@ const Main = {
             const newTask = e.target.value
 
             if (key === 'Enter'){
-                this.list.innerHTML += `
+                this.list.innerHTML += 
+                `
                     <li id="done">
                         <div class="check"></div>
                             <label class="task">
@@ -61,7 +89,13 @@ const Main = {
                 `
                 e.target.value = ''
                 this.selectors()
-                this.callevents()
+                this.callEvents()
+
+                const obj = [{
+                    task: newTask
+                }]
+
+                localStorage.setItem('tasks', JSON.stringify(obj))
             }
         }
     }

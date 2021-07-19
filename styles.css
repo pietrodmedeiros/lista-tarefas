@@ -99,7 +99,7 @@ body {
 }
 
 .wrapper-list ul.list li.hidden1 {
-    animation: deleteTask 2000ms ease;
+    animation: deleteTask 900ms ease;
 }
 
 .wrapper-list ul.list li.hidden2 {
