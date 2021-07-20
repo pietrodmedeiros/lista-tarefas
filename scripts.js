@@ -145,6 +145,9 @@ const Main = {
                 const jsonTasks = JSON.stringify(arrTasks)
                 this.tasks = arrTasks
                 localStorage.setItem('tasks', jsonTasks)
+
+                this.getLocalStorage()
+                this.showTasks()
             }
         }
     }
