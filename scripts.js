@@ -19,7 +19,7 @@ const Main = {
     callEvents: function() {
         const self = this
         this.checkButtons.forEach(function(button){              
-                button.onclick = self.Events.checkButton_click
+                button.onclick = self.Events.checkButton_click.bind(self)
         })
 
         this.inputTask.onkeypress = self.Events.inputTask_keyPress.bind(this)
@@ -40,22 +40,21 @@ const Main = {
     },
 
 
-    getTaskHtml: function(task){
+    getTaskHtml: function(task, isDone){
         return `
-            <li id="done">
+            <li id="done" class="${isDone ? 'done' : ''}" data-task="${task}">
                 <div class="check"></div>
                 <label class="task">
                     ${task}
                 </label>
-                <img class="remove" data-task="${task}" src="./img/delete.svg">
+                <img class="remove" src="./img/delete.svg">
             </li>
             `
     },
     showTasks: function(){
         let html = ''
         this.tasks.forEach(task =>{
-            html += this.getTaskHtml(task.task)
-            
+            html += this.getTaskHtml(task.task, task.done)
         })
 
         this.list.innerHTML = html
@@ -68,17 +67,31 @@ const Main = {
     Events: {
         checkButton_click: function(e){
             const li = e.target.parentElement
+            const value = li.dataset['task']
             const isDone = li.classList.contains("done")
+
+
+            const newTasksState = this.tasks.map(task =>{
+                if (task.task === value){
+                    task.done = !isDone
+                }
+                return task
+            })
+
+            localStorage.setItem('tasks', JSON.stringify(newTasksState))
+
+
             if (!isDone) {
                 li.classList.add("done")
             }else {
                 li.classList.remove("done")
             }
         },
+        
 
         deleteButton_click: function(e){
             const li = e.target.parentElement
-            const value = e.target.dataset['task']
+            const value = li.dataset['task']
 
             const newTasks = this.tasks.filter(task => task.task !== value)
             localStorage.setItem('tasks', JSON.stringify(newTasks))
@@ -112,20 +125,20 @@ const Main = {
         inputTask_keyPress: function(e){
             const key = e.key
             const newTask = e.target.value
+            const isDone = false
 
             if (key === 'Enter'){
-                this.list.innerHTML += this.getTaskHtml(newTask)
+                this.list.innerHTML += this.getTaskHtml(newTask, isDone)
                 
                 e.target.value = ''
-                this.selectors()
-                this.callEvents()
+
 
                 const savedTasks = localStorage.getItem('tasks')
                 const savedTasksArr = JSON.parse(savedTasks)
 
 
                 const arrTasks = [
-                    { task: newTask },
+                    { task: newTask, done: isDone},
                     ...savedTasksArr,
                 ]
                 
